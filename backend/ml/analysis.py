@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.cluster import KMeans
 import json
+import sys
 
 def analyze_spending(expenses):
     df = pd.DataFrame(expenses)
@@ -22,3 +23,8 @@ def analyze_spending(expenses):
         'cluster_centers': cluster_centers.tolist(),
         'clusters': clusters
     })
+
+if __name__ == "__main__":
+    input_data = json.loads(sys.stdin.read())
+    result = analyze_spending(input_data)
+    print(result)

@@ -36,11 +36,8 @@ app.get('*', (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-const username = encodeURIComponent(process.env.DB_USERNAME);
-const password = encodeURIComponent(process.env.DB_PASSWORD);
-const dbName = process.env.DB_NAME;
-const mongoURI = `mongodb+srv://${username}:${password}@cluster0.hbfujyw.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+const mongoURI = process.env.MONGO_URI;
 
-mongoose.connect(mongoURI, {  })
+mongoose.connect(mongoURI, { })
   .then(() => app.listen(PORT, () => console.log(`Server running on port ${PORT}`)))
   .catch((err) => console.error(err));

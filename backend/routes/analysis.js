@@ -17,8 +17,7 @@ router.get('/spending-patterns', auth, async (req, res) => {
     }));
 
     // Resolve the absolute path to analysis.py using path.resolve
-    const scriptPath = path.resolve(__dirname, '../ml/analysis.py');
-    const pythonProcess = spawn('python', [scriptPath]);
+    const pythonProcess = spawn('python', '../ml/analysis.py');
 
     // Write data to the Python process
     pythonProcess.stdin.write(JSON.stringify(expenseData));
