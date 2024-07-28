@@ -26,6 +26,15 @@ export const getExpenses = async (token) => {
   return response.data;
 };
 
+export const deleteExpense = async (expenseId, token) => {
+  const response = await axios.delete(`${API_URL}/expenses/${expenseId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+}
+
+
+
 export const addIncome = async (incomeData, token) => {
   const response = await axios.post(`${API_URL}/incomes`, incomeData, {
     headers: { Authorization: `Bearer ${token}` },
@@ -40,9 +49,18 @@ export const getIncomes = async (token) => {
   return response.data;
 };
 
+export const deleteIncome = async (incomeId, token) => {
+  const response = await axios.delete(`${API_URL}/incomes/${incomeId}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+}
+
 export const getSpendingAnalysis = async (token) => {
   const response = await axios.get(`${API_URL}/analysis/spending-patterns`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;
 };
+
+

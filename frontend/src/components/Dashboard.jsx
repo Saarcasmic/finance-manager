@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getExpenses, getIncomes } from '../services/api';
+import { getExpenses, getIncomes,deleteExpense, deleteIncome } from '../services/api';
 import AddExpense from './AddExpense';
 import AddIncome from './AddIncome';
 
@@ -15,10 +15,31 @@ const Dashboard = () => {
     setIncomes(fetchedIncomes);
   };
 
+  const handleDeleteExpense = async (e, id) => {
+    e.preventDefault();
+    try {
+      await deleteExpense(id, token);
+      fetchData();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const handleDeleteIncome = async (e, id) => {
+    e.preventDefault();
+    try {
+      await deleteIncome(id, token);
+      fetchData();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
   useEffect(() => {
-    
     fetchData();
   }, [token]);
+
 
   return (
     <div className="container mx-auto mt-8 p-6 bg-gray-100 min-h-screen">
@@ -39,6 +60,7 @@ const Dashboard = () => {
               <li key={expense._id} className="flex justify-between text-gray-700">
                 <span>{expense.category}</span>
                 <span>{expense.amount}</span>
+                <button className="text-red-500" onClick={(e) => handleDeleteExpense(e, expense._id)}>Delete</button>
               </li>
             ))}
           </ul>
@@ -50,6 +72,7 @@ const Dashboard = () => {
               <li key={income._id} className="flex justify-between text-gray-700">
                 <span>{income.source}</span>
                 <span>{income.amount}</span>
+                <button className="text-red-500" onClick={(e) => handleDeleteIncome(e, income._id)}>Delete</button>
               </li>
             ))}
           </ul>

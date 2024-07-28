@@ -45,4 +45,30 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
+// Delete Expense Route
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    
+    let expense = await Expense.findById(req.params.id);
+
+    if (!expense) {
+      console.log('Expense not found');
+      return res.status(404).json({ msg: 'Expense not found' });
+    }
+
+    if (expense.userId.toString() !== req.user.id) {
+      console.log('User not authorized');
+      return res.status(401).json({ msg: 'Not authorized' });
+    }
+
+    await Expense.findByIdAndDelete(req.params.id); // Use findByIdAndDelete instead of findByIdAndRemove
+
+    res.json({ msg: 'Expense removed' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
+
+
 module.exports = router;
