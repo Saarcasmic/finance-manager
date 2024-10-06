@@ -8,6 +8,8 @@ import Navbar from './components/Navbar';
 import SpendingAnalysis from './components/SpendingAnalysis';
 import './index.css';
 
+
+
 function App() {
   return (
     <Router>

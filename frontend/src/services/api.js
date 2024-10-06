@@ -7,7 +7,8 @@ export const register = async (userData) => {
   return response.data;
 };
 
-export const login = async (userData) => {
+export const  loginn = async (userData) => {
+  console.log(userData);
   const response = await axios.post(`${API_URL}/auth/login`, userData);
   return response.data;
 };

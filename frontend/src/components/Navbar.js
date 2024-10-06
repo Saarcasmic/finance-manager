@@ -1,25 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../AuthContext';
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const history = useNavigate();
-
-  useEffect(() => {
-    // Check login status (this is a simple example, adapt it to your authentication logic)
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, []);
+  const { isLoggedIn, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Handle logout logic (e.g., remove token from local storage)
-    localStorage.removeItem('token');
-    setIsLoggedIn(false);
-    history("/");
+    logout();  // Call logout from context
+    navigate('/');
   };
 
   return (
@@ -28,14 +17,12 @@ const Navbar = () => {
         <Link to="/" className="text-white text-lg font-semibold">Home</Link>
         <div>
           {isLoggedIn ? (
-            <>
-              <button
-                onClick={handleLogout}
-                className="text-white mr-6 hover:text-gray-200 transition duration-300"
-              >
-                Logout
-              </button>
-            </>
+            <button
+              onClick={handleLogout}
+              className="text-white mr-6 hover:text-gray-200 transition duration-300"
+            >
+              Logout
+            </button>
           ) : (
             <>
               <Link to="/login" className="text-white mr-6 hover:text-gray-200 transition duration-300">Login</Link>
